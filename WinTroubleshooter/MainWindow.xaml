@@ -5,8 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinTroubleshooter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="WinTroubleshooter" Width="600" Height="450">
+    <Grid Background="LightGray">
+        <TabControl>
+            <TabItem Header="Basic">
+                <StackPanel>
+                    <TextBlock Padding="10" TextWrapping="Wrap">Basic troubleshooting suggestions. If these don't fix your issue, try the options in other tabs. Rest assured
+                    that none of these will break your computer, even if they end up doing nothing to help.</TextBlock>
+                    <GroupBox Header="CPU" Padding="5" Margin="10 0">
+                        <StackPanel>
+                            <TextBlock TextWrapping="Wrap">Synchronizes the low-load clock rate of your CPU to the high-load clock rate. Offers decreased multitasking latency
+                            at the cost of slightly increased power usage.</TextBlock>
+                            <Button Width="150" HorizontalAlignment="Right" Margin="5" Name="CpuOptSyncClock" Click="CpuOptSyncClock_OnClick">Synchronize clock</Button>
+                            <TextBlock TextWrapping="Wrap" Margin="0 10 0 0">Scans and defragments the L1 cache on your CPU die. Usually results in moderately increased
+                            performance per cycle.</TextBlock>
+                            <Button Width="150" HorizontalAlignment="Right" Margin="5" Name="CpuOptL1Cache" Click="CpuOptL1Cache_OnClick">Repair L1 cache</Button>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Disks" Padding="5" Margin="10 0">
+                        <StackPanel>
+                            <TextBlock TextWrapping="Wrap">
+                                Rebuilds your disks' internal indexes to improve latency and throughput for file access. Uses HCWR (fast), but still might take a few minutes.
+                            </TextBlock>
+                            <Grid Margin="0 5 5 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="150"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <ProgressBar Height="20" Margin="0 0 10 0" Grid.Column="0" Name="DiskOptRebuildIndexProgress"></ProgressBar>
+                                <Button Grid.Column="1" Width="150" HorizontalAlignment="Right" Name="DiskOptRebuildIndex" Click="DiskOptRebuildIndex_OnClick">Rebuild indexes</Button>
+                            </Grid>    
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Advanced">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" Padding="10">More advanced troubleshooting options. Use these if you can't solve your problem using the basic options
+                    provided - everything here is still safe to use.</TextBlock>
+                    <GroupBox Header="Performance" Margin="10" Padding="5">
+                        <StackPanel>
+                            <TextBlock TextWrapping="Wrap">
+                                Removes old or expired cached data and code, freeing up cache space for immediate usage. Depending on cache usage, results in small to moderate performance gain.
+                            </TextBlock>
+                            <Button HorizontalAlignment="Right" Width="150" Name="AdvPerfCleanCache" Click="AdvPerfCleanCache_OnClick" Margin="5">Optimize caches</Button>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
