@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='WinTroubleshooter' Manufacturer='ArtOfCode'
+           Id='4ccfd5db-2b2e-46c8-85b2-5d8cffe45bdb'
+           UpgradeCode='c7b7de09-4b83-4237-b3d5-c2f565f79f9e'
+           Language='1033' Codepage='1252' Version='1.0.0'>
+    <Package Id='*' Keywords='Installer' Description="WinTroubleshooter Installer"
+             Manufacturer='ArtOfCode' InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+    <Media Id='1' Cabinet='Package.cab' EmbedCab='yes' />
+      
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='ArtOfCode' Name='ArtOfCode'>
+          <Directory Id='INSTALLDIR' Name='WinTroubleshooter'>
+            <Component Id='MainExecutable' Guid='31c801f4-b0e1-4fe5-8753-dcaa73f36f10'>
+              <File Id='WTExe' Name='WinTroubleshooter.exe' DiskId='1' Source='$(sys.SOURCEFILEDIR)bin/Debug/WinTroubleshooter.exe' KeyPath='yes'>
+                <Shortcut Id='DesktopExeShortcut' Directory='DesktopFolder' Name='WinTroubleshooter' WorkingDirectory='INSTALLDIR' Advertise='yes' />
+                <Shortcut Id='ProgramMenuExeShortcut' Directory='ProgramMenuFolder' Name='WinTroubleshooter' WorkingDirectory='INSTALLDIR' Advertise='yes' />
+              </File>
+              <File Id='WTExeConfig' Name='WinTroubleshooter.exe.config' DiskId='1' Source='$(sys.SOURCEFILEDIR)bin/Debug/WinTroubleshooter.exe.config' />
+              <File Id='WTSymbols' Name='WinTroubleshooter.pdb' DiskId='1' Source='$(sys.SOURCEFILEDIR)bin/Debug/WinTroubleshooter.pdb' />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+      
+      <Directory Id='ProgramMenuFolder' Name='Programs'>
+        <Directory Id='ProgramMenuDir' Name='WinTroubleshooter'>
+          <Component Id='ProgramMenuDir' Guid='dabfebbc-6a28-4d5a-8848-9a1d3c5c1e2f'>
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\ArtOfCode\WinTroubleshooter' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+    
+      <Directory Id='DesktopFolder' Name='Desktop' />
+    </Directory>
+    
+    <Feature Id='CompleteInstall' Level='1'>
+      <ComponentRef Id='MainExecutable' />
+      <ComponentRef Id='ProgramMenuDir' />
+    </Feature>
+  </Product>
+</Wix> 

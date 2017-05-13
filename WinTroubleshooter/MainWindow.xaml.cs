@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -135,6 +137,59 @@ namespace WinTroubleshooter
 
             AdvPerfResetLatency.Content = originalLabel;
             ShowCodedMessageBox("Removed overridden configurations, and renewed and reset LSR engine.");
+        }
+
+        private void AdvDefOptimizeDB_OnClick(object sender, RoutedEventArgs e)
+        {
+            AdvDefOptimizeDB.IsEnabled = false;
+            ShowCodedMessageBox("AM database optimization procedures set to run in the background.");
+        }
+
+        private async void AdvDefCheckAirgap_OnClick(object sender, RoutedEventArgs e)
+        {
+            List<ResponseStage> stages = new List<ResponseStage>
+            {
+                new ResponseStage("Checking procedure: IdentifyComponents...", 1000, 3000),
+                new ResponseStage("Checking procedure: IsolateIdentifiedSingle...", 500, 2000),
+                new ResponseStage("Checking procedure: IsolateIdentifiedMultiplex...", 2000, 5000),
+                new ResponseStage("Checking procedure: HandleIsolatedComms...", 500, 2000),
+                new ResponseStage("Checking procedure: UnexpectedIsolationBreakout...", 2000, 5000),
+                new ResponseStage("Checking procedure: LegalIsolationBreakout...", 1000, 3000),
+                new ResponseStage("Checking full process run...", 4000, 8000)
+            };
+
+            AdvDefCheckAirgap.IsEnabled = false;
+            object originalLabel = AdvDefCheckAirgap.Content;
+
+            foreach (ResponseStage stage in stages)
+            {
+                AdvDefCheckAirgapStatus.Text = stage.DisplayText;
+                await WaitRandom(stage.MinDelay, stage.MaxDelay);
+            }
+
+            AdvDefCheckAirgap.Content = originalLabel;
+            AdvDefCheckAirgapStatus.Text = "";
+            ShowCodedMessageBox("Airgap procedures validated and certified.");
+        }
+
+        private void AdvRunAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            List<Button> actions = new List<Button>
+            {
+                (Button)FindName("AdvPerfCleanCache"),
+                (Button)FindName("AdvPerfReinitDatabases"),
+                (Button)FindName("AdvPerfResetLatency"),
+                (Button)FindName("AdvDefOptimizeDB"),
+                (Button)FindName("AdvDefCheckAirgap")
+            };
+
+            foreach (Button action in actions)
+            {
+                if (action.IsEnabled)
+                {
+                    action.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                }
+            }
         }
     }
 }
