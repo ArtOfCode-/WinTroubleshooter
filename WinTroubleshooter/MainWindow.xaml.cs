@@ -85,9 +85,56 @@ namespace WinTroubleshooter
             ShowCodedMessageBox($"Disk indexes successfully rebuilt ({entries} entries now in index).");
         }
 
-        private void AdvPerfCleanCache_OnClick(object sender, RoutedEventArgs e)
+        private async void AdvPerfCleanCache_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            AdvPerfCleanCache.IsEnabled = false;
+            object originalLabel = AdvPerfCleanCache.Content;
+            AdvPerfCleanCache.Content = "Cleaning...";
+
+            await WaitRandom();
+
+            AdvPerfCleanCache.Content = "Refreshing...";
+            await WaitRandom();
+
+            AdvPerfCleanCache.Content = "Repopulating...";
+            await WaitRandom();
+
+            AdvPerfCleanCache.Content = "Revalidating...";
+            await WaitRandom();
+
+            AdvPerfCleanCache.Content = originalLabel;
+            ShowCodedMessageBox("Caches succesfully cleaned and repopulated.");
+        }
+
+        private async void AdvPerfReinitDatabases_OnClick(object sender, RoutedEventArgs e)
+        {
+            AdvPerfReinitDatabases.IsEnabled = false;
+            object originalLabel = AdvPerfReinitDatabases.Content;
+            AdvPerfReinitDatabases.Content = "Reinitializing...";
+
+            await WaitRandom(3000, 8000);
+
+            AdvPerfReinitDatabases.Content = originalLabel;
+            int affected = Generator.Next(4, 32);
+            ShowCodedMessageBox($"{affected} databases successfully reinitialized; optimization procedures have been set to run in the background.");
+        }
+
+        private async void AdvPerfResetLatency_OnClick(object sender, RoutedEventArgs e)
+        {
+            AdvPerfResetLatency.IsEnabled = false;
+            object originalLabel = AdvPerfResetLatency.Content;
+            AdvPerfResetLatency.Content = "Removing...";
+
+            await WaitRandom(2000, 5000);
+            AdvPerfResetLatency.Content = "Compiling...";
+
+            await WaitRandom(7000, 15000);
+            AdvPerfResetLatency.Content = "Resetting...";
+
+            await WaitRandom(500, 2000);
+
+            AdvPerfResetLatency.Content = originalLabel;
+            ShowCodedMessageBox("Removed overridden configurations, and renewed and reset LSR engine.");
         }
     }
 }

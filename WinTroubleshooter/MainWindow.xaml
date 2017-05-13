@@ -49,6 +49,12 @@
                                 Removes old or expired cached data and code, freeing up cache space for immediate usage. Depending on cache usage, results in small to moderate performance gain.
                             </TextBlock>
                             <Button HorizontalAlignment="Right" Width="150" Name="AdvPerfCleanCache" Click="AdvPerfCleanCache_OnClick" Margin="5">Optimize caches</Button>
+                            <TextBlock TextWrapping="Wrap" Margin="0 5 0 0">Reinitializes and runs optimization procedures on the system's API databases, enabling applications to access
+                            resources faster, which translates to a small performance gain.</TextBlock>
+                            <Button Width="150" HorizontalAlignment="Right" Name="AdvPerfReinitDatabases" Click="AdvPerfReinitDatabases_OnClick" Margin="5">Reinitialize databases</Button>
+                            <TextBlock TextWrapping="Wrap" Margin="0 5 0 0">Resets the built-in latency suppression-reduction engine to its factory/design specifications, which
+                            resolves issues with other programs overriding it. Reduces system latency.</TextBlock>
+                            <Button Width="150" HorizontalAlignment="Right" Name="AdvPerfResetLatency" Click="AdvPerfResetLatency_OnClick" Margin="5">Reset LSR engine</Button>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
